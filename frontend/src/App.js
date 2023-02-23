@@ -4,12 +4,14 @@ import Properties from './properties';
 import { useEffect } from 'react';
 import Login from './login';
 import Register from './register';
-import Favproperties from './favprops';
+
+import Favitem from './favitem';
+import { Favprop } from './favprops';
 
 
 
 
-function App({product,item}) {
+function App({product,propitems}) {
 
   
 
@@ -31,7 +33,8 @@ function App({product,item}) {
         <Route exact path="/display" element={<Properties />}></Route>
         <Route exact path="/login" element={<Login />}></Route>
         <Route exact path="/register" element={<Register />} ></Route>
-        <Route exact path="/liked" element={<Favproperties product={product} item={item}/>} ></Route>
+        <Route exact path="/liked" element={<Favprop propitems={propitems}/>} ></Route>
+        <Route exact path="/favitem" element={<Favitem product={product}/>}></Route>
       </Routes>
       
 

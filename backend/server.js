@@ -5,9 +5,13 @@ const cors = require("cors")
 const app = express();
 app.use(express.json())
 app.use(cors())
+const {v4 : uuidv4} = require('uuid')
+
+
+const userId = uuidv4()
 
 const data = require("./estate.json");
-const  MongoClient  = require("mongodb").MongoClient;
+
 
 
 mongoose.connect(url, {
@@ -18,13 +22,14 @@ mongoose.connect(url, {
 .catch(err => console.error('Error connecting to MongoDB:', err));
 
 
-const objSchema = new mongoose.Schema( {
+const objSchema = new mongoose.Schema({
+    _id : String,
     bathroomsTotalInteger : String,
     bedroomsTotal : String,
     buildingAreaTotal : String,
     price : String,
     address : String,
-    media : Array
+    
 })
 
 const myObj = mongoose.model("properties", objSchema)
@@ -83,16 +88,17 @@ app.post("/register", (req, res) => {
      }}
 )})
 
-app.post("/get" , (res,err)=>{
-    if (err) throw err;
+app.post("/get" , (req,res)=>{
 
-   myObj.find({} , (req,res) => {
-    if (err) throw err;
+    
+  const result =  myObj.find({} , ((err,data)=>{
+        res.send(data)
+        console.log(data)
+    }));
 
-    res.send(data)
-    console.log({data})
+   
 
-   })
+   
     })
 
 
@@ -100,17 +106,19 @@ app.post("/get" , (res,err)=>{
 
 app.post("/add", () =>{
 
-    
 
     data.forEach(data=>{
 
+
+
         const obj = new myObj({
+        _id : userId,
         bathroomsTotalInteger : data.bathroomsTotalInteger,
         bedroomsTotal : data.bedroomsTotal,
         buildingAreaTotal : data.buildingAreaTotal,
         price : data.price,
         address : data.address,
-        media : data.media
+        
     
         })
 

@@ -5,7 +5,7 @@ import {  ADD_TO_PROP, REMOVE_ITEM } from "../Types.js";
 
 const PropState = ({ children }) => {
   const initalState = {
-    PropItems: []
+    propItems: []
   };
 
   const [state, dispatch] = useReducer(PropReducer, initalState);
